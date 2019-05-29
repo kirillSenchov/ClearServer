@@ -153,7 +153,7 @@ namespace ClearServer
             }
             catch(Exception)
             {
-                Console.WriteLine("Возникла ошибка при проверки родительских директорий");
+                Console.WriteLine("Возникла ошибка при проверке родительских директорий");
             }
             return false;
         }
