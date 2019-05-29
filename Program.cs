@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-//using System.Linq;
-using System.Text;
-//using System.Threading.Tasks;
+﻿
+using System;
 using System.IO;
 
 namespace ClearServer
@@ -11,7 +8,6 @@ namespace ClearServer
     {
         static void Main(string[] args)
         {
-
             Console.WriteLine("\n\n*********************************************************************");
             Console.WriteLine("*                          ClearServer                               *");
             Console.WriteLine("*                                                                    *");
@@ -20,12 +16,13 @@ namespace ClearServer
             Console.WriteLine("*********************************************************************\n\n");
 
             string directory = "";
-            try 
+            try
             {
-                Console.Write("Введите путь (Если оставить поле пустым то программа будет работать \nв директории в которой она находится): ");
+                Console.Write("Введите путь (Если оставить поле ввода пустым то приложение будет работать \n" +
+                    "в директории в которой она находится): ");
                 directory = Console.ReadLine();
             }
-            catch(Exception)
+            catch (Exception)
             {
                 Console.WriteLine("Возникла ошибка при получении адреса");
             }
@@ -46,7 +43,7 @@ namespace ClearServer
                 Console.Write("\nВы точно хотите удалить эти файлы? (y\\n): ");
                 string res = Console.ReadLine();
 
-                if (res == "y") 
+                if (res == "y")
                 {
                     foreach (string el in allFiles)
                     {
@@ -58,12 +55,12 @@ namespace ClearServer
                 {
                     Console.WriteLine("Файлы не были удалены");
                 }
-                else 
+                else
                 {
                     Console.WriteLine("Неизвестный ответ");
                 }
             }
-            else 
+            else
             {
                 Console.WriteLine("Папки не найдены");
             }
@@ -89,8 +86,10 @@ namespace ClearServer
                 hideFiles = clearArr(hideFiles, path);
                 string[] sdf = Directory.GetFiles(path, "*.sdf", SearchOption.AllDirectories);
                 sdf = clearArr(sdf, path);
+                string[] libs = Directory.GetFiles(path, "*.lib", SearchOption.AllDirectories);
+                libs = clearArr(libs, path);
 
-                string[] files = new string[bins.Length + objs.Length + vs.Length + hideFiles.Length + sdf.Length + ipch.Length];
+                string[] files = new string[bins.Length + objs.Length + vs.Length + hideFiles.Length + sdf.Length + ipch.Length /*+ libs.Length*/];
 
                 for (int j = 0; j < bins.Length; j++) { files[j] = bins[j]; }
                 for (int j = 0; j < objs.Length; j++) { files[bins.Length + j] = objs[j]; }
@@ -98,27 +97,29 @@ namespace ClearServer
                 for (int j = 0; j < hideFiles.Length; j++) { files[bins.Length + objs.Length + vs.Length + j] = hideFiles[j]; }
                 for (int j = 0; j < sdf.Length; j++) { files[bins.Length + objs.Length + vs.Length + hideFiles.Length + j] = sdf[j]; }
                 for (int j = 0; j < ipch.Length; j++) { files[bins.Length + objs.Length + vs.Length + hideFiles.Length + ipch.Length + j] = ipch[j]; }
+                //for (int j = 0; j < libs.Length; j++) { files[bins.Length + objs.Length + vs.Length + hideFiles.Length + ipch.Length + libs.Length + j] = libs[j]; }
 
                 return files;
             }
-            catch(Exception)
+            catch (Exception e)
             {
+                Console.WriteLine(e.Message.ToString());
                 Console.WriteLine("Возникла ошибка при поиске файлов и папок");
             }
             return null;
         }
 
-        public static string[] clearArr(string[] arr, string startDir) 
+        public static string[] clearArr(string[] arr, string startDir)
         {
             try
             {
                 int newArrayLength = 0;
-                
-                foreach(string el in arr)
+
+                foreach (string el in arr)
                 {
                     if (!parentDir(el, startDir))
                     {
-                        newArrayLength++; 
+                        newArrayLength++;
                     }
                 }
 
@@ -136,7 +137,7 @@ namespace ClearServer
                 }
                 return newArray;
             }
-            catch(Exception)
+            catch (Exception)
             {
                 Console.WriteLine("Возникла ошибка при отчистки массива");
             }
@@ -145,7 +146,7 @@ namespace ClearServer
 
         public static bool parentDir(string path, string startDir)
         {
-            try 
+            try
             {
                 string dir = path;
                 while (dir != startDir)
@@ -158,7 +159,7 @@ namespace ClearServer
                     dir = Directory.GetParent(dir).ToString();
                 }
             }
-            catch(Exception)
+            catch (Exception)
             {
                 Console.WriteLine("Возникла ошибка при проверке родительских директорий");
             }
@@ -173,7 +174,7 @@ namespace ClearServer
                 {
                     File.Delete(path);
                 }
-                else 
+                else
                 {
                     System.IO.DirectoryInfo di = new DirectoryInfo(path);
 
