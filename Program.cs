@@ -82,19 +82,23 @@ namespace ClearServer
                 objs = clearArr(objs, path);
                 string[] vs = Directory.GetDirectories(path, ".vs", SearchOption.AllDirectories);
                 vs = clearArr(vs, path);
+                string[] ipch = Directory.GetDirectories(path, "ipch", SearchOption.AllDirectories);
+                ipch = clearArr(ipch, path);
+
                 string[] hideFiles = Directory.GetFiles(path, "*.suo", SearchOption.AllDirectories);
                 hideFiles = clearArr(hideFiles, path);
-
                 string[] sdf = Directory.GetFiles(path, "*.sdf", SearchOption.AllDirectories);
                 sdf = clearArr(sdf, path);
 
-                string[] files = new string[bins.Length + objs.Length + vs.Length + hideFiles.Length];
+                string[] files = new string[bins.Length + objs.Length + vs.Length + hideFiles.Length + sdf.Length + ipch.Length];
 
                 for (int j = 0; j < bins.Length; j++) { files[j] = bins[j]; }
                 for (int j = 0; j < objs.Length; j++) { files[bins.Length + j] = objs[j]; }
                 for (int j = 0; j < vs.Length; j++) { files[bins.Length + objs.Length + j] = vs[j]; }
                 for (int j = 0; j < hideFiles.Length; j++) { files[bins.Length + objs.Length + vs.Length + j] = hideFiles[j]; }
-                
+                for (int j = 0; j < sdf.Length; j++) { files[bins.Length + objs.Length + vs.Length + hideFiles.Length + j] = sdf[j]; }
+                for (int j = 0; j < ipch.Length; j++) { files[bins.Length + objs.Length + vs.Length + hideFiles.Length + ipch.Length + j] = ipch[j]; }
+
                 return files;
             }
             catch(Exception)
