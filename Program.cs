@@ -12,12 +12,12 @@ namespace ClearServer
         static void Main(string[] args)
         {
 
-            Console.WriteLine("\n\n**********************************************************************");
+            Console.WriteLine("\n\n*********************************************************************");
             Console.WriteLine("*                          ClearServer                               *");
             Console.WriteLine("*                                                                    *");
             Console.WriteLine("* Программа ClearServer предназначена для отчистки сервера от мусора *");
             Console.WriteLine("*                                                                    *");
-            Console.WriteLine("**********************************************************************\n\n");
+            Console.WriteLine("*********************************************************************\n\n");
 
             string directory = "";
             try 
@@ -84,6 +84,9 @@ namespace ClearServer
                 vs = clearArr(vs, path);
                 string[] hideFiles = Directory.GetFiles(path, "*.suo", SearchOption.AllDirectories);
                 hideFiles = clearArr(hideFiles, path);
+
+                string[] sdf = Directory.GetFiles(path, "*.sdf", SearchOption.AllDirectories);
+                sdf = clearArr(sdf, path);
 
                 string[] files = new string[bins.Length + objs.Length + vs.Length + hideFiles.Length];
 
