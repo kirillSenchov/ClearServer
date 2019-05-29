@@ -83,6 +83,7 @@ namespace ClearServer
                 string[] vs = Directory.GetDirectories(path, ".vs", SearchOption.AllDirectories);
                 vs = clearArr(vs, path);
                 string[] hideFiles = Directory.GetFiles(path, "*.suo", SearchOption.AllDirectories);
+                hideFiles = clearArr(hideFiles, path);
 
                 string[] files = new string[bins.Length + objs.Length + vs.Length + hideFiles.Length];
 
