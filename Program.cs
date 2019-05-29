@@ -107,7 +107,6 @@ namespace ClearServer
             {
                 int newArrayLength = 0;
                 
-
                 foreach(string el in arr)
                 {
                     if (!parentDir(el, startDir))
@@ -161,7 +160,8 @@ namespace ClearServer
 
         public static void delElements(string path)
         {
-            try {
+            try
+            {
                 if (File.Exists(path))
                 {
                     File.Delete(path);
